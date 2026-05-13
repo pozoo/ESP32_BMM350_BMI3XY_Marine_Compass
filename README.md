@@ -48,7 +48,7 @@ A GPS receiver feeding NMEA `RMC`/`VTG` over TCP, UDP, or USB is recommended —
 
 This is a [PlatformIO](https://platformio.org) project.
 
-Use the VS Code PlatformIO plugin to build it or use the command line:
+Use the VS Code PlatformIO plugin to build it or install PlatformIO and use the command line:
 
 ```bash
 # Build and flash
