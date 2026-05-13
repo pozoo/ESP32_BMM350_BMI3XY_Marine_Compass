@@ -1,0 +1,26 @@
+{
+    "name": "PlatformIO x86_64 (OrbStack)",
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+    // Wichtig: Erzwingt die Architektur beim Start
+    "runArgs": ["--platform", "linux/amd64"],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "platformio.platformio-ide"
+            ],
+            "settings": {
+                // Sagt der Extension, dass sie die bereits installierte 
+                // PIO-Version im Container nutzen soll
+                "platformio.useBuiltinPIOCore": false,
+                "platformio.customPath": "/usr/local/bin/pio"
+            }
+        }
+    },
+    "mounts": [
+        "source=${localWorkspaceFolder}/../BMM350_BMI3XY_compass_lib_pack,target=/workspaces/BMM350_BMI3XY_compass_lib_pack,type=bind"
+    ],
+    "remoteUser": "vscode"
+}

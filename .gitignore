@@ -1,0 +1,11 @@
+.pio
+.vscode
+include/Html_compass.h
+examples
+builds
+.DS_Store
+compile_commands.json
+__pycache__/
+*.py[cod]
+.claude/
+*.code-workspace
