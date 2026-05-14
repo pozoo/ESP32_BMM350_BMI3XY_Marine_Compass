@@ -23,49 +23,49 @@ WiFiManager::WiFiManager()
 
 void WiFiManager::begin() {
     PLATFORM_LOCK_GUARD(PLATFORM_MUTEX_TYPE, lock, _mutex);
-    
+
     // Set WiFi mode to AP+STA
     WiFi.mode(WIFI_AP_STA);
-    
+
     // Initialize preferences
     _preferences.begin("wifi", false);
-    
+
     // Load saved hostname (if any)
     loadHostname();
-    
+
     // Load AP password if saved
     String savedPassword = _preferences.getString("ap_password", "");
     if (savedPassword.length() > 0) {
         _apPassword = savedPassword;
         Log.verboseln("Loaded AP password from NVS");
     }
-    
+
     // Set the hostname
     WiFi.setHostname(_hostname.c_str());
-    
+
     // Try to load saved credentials
     String ssid, password;
     if (loadCredentials(ssid, password)) {
         Log.verboseln("Loaded WiFi credentials from NVS");
-        
+
         // Check if we should auto-reconnect (was connected before reboot)
         bool wasConnected = _preferences.getBool("was_connected", false);
-        
+
         if (wasConnected) {
             _staSSID = ssid;
             _staPassword = password;
             _stationEnabled = true;
-            
+
             // Try to connect
             Log.verboseln("Auto-reconnecting to %s...", ssid.c_str());
             WiFi.begin(ssid.c_str(), password.c_str());
-            
+
             // Wait for connection (with timeout)
             unsigned long startAttempt = millis();
             while (WiFi.status() != WL_CONNECTED && millis() - startAttempt < 10000) {
                 delay(100);
             }
-            
+
             if (WiFi.status() == WL_CONNECTED) {
                 Log.noticeln("WiFi connected! IP: %p", WiFi.localIP());
                 startMDNS_internal();
@@ -81,7 +81,9 @@ void WiFiManager::begin() {
     } else {
         Log.verboseln("No saved WiFi credentials");
     }
-    
+
+    _preferences.end();
+
     // Always start AP mode
     startAP_internal();
 }
@@ -227,26 +229,30 @@ void WiFiManager::disconnect() {
 
 void WiFiManager::saveCredentials(const char* ssid, const char* password) {
     PLATFORM_LOCK_GUARD(PLATFORM_MUTEX_TYPE, lock, _mutex);
-    
+
     Log.verboseln("Saving WiFi credentials to NVS");
+    _preferences.begin("wifi", false);
     _preferences.putString("ssid", ssid);
     _preferences.putString("password", password);
+    _preferences.end();
 }
 
 bool WiFiManager::loadCredentials(String &ssid, String &password) {
     ssid = _preferences.getString("ssid", "");
     password = _preferences.getString("password", "");
-    
+
     return ssid.length() > 0;
 }
 
 void WiFiManager::clearCredentials() {
     PLATFORM_LOCK_GUARD(PLATFORM_MUTEX_TYPE, lock, _mutex);
-    
+
     Log.infoln("Clearing WiFi credentials from NVS");
+    _preferences.begin("wifi", false);
     _preferences.remove("ssid");
     _preferences.remove("password");
     _preferences.remove("was_connected");
+    _preferences.end();
     _staSSID = "";
     _staPassword = "";
     _stationEnabled = false;
@@ -280,17 +286,21 @@ void WiFiManager::saveConnectionState(bool connected) {
 }
 
 void WiFiManager::saveConnectionState_internal(bool connected) {
+    _preferences.begin("wifi", false);
     _preferences.putBool("was_connected", connected);
+    _preferences.end();
     Log.verboseln("Saved connection state: %s", connected ? "connected" : "disconnected");
 }
 
 void WiFiManager::saveHostname(const char* hostname) {
     PLATFORM_LOCK_GUARD(PLATFORM_MUTEX_TYPE, lock, _mutex);
-    
+
     Log.verboseln("Saving hostname to NVS: %s", hostname);
+    _preferences.begin("wifi", false);
     _preferences.putString("hostname", hostname);
+    _preferences.end();
     setHostname_internal(hostname);
-    
+
     // Restart AP with new SSID
     if (_apActive) {
         WiFi.softAPdisconnect(true);
@@ -301,11 +311,13 @@ void WiFiManager::saveHostname(const char* hostname) {
 
 void WiFiManager::saveAPPassword(const char* password) {
     PLATFORM_LOCK_GUARD(PLATFORM_MUTEX_TYPE, lock, _mutex);
-    
+
     Log.verboseln("Saving AP password to NVS");
+    _preferences.begin("wifi", false);
     _preferences.putString("ap_password", password);
+    _preferences.end();
     _apPassword = password;
-    
+
     // Restart AP with new password
     if (_apActive) {
         WiFi.softAPdisconnect(true);
