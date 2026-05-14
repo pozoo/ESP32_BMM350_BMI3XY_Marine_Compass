@@ -1,8 +1,8 @@
-# ESP32-C3 9-DOF Marine Compass
+# ESP32 Marine Compass based on Bosch BMM350
 
 A tilt-compensated electronic compass for sailboats, built on an ESP32-C3 with a Bosch BMM350 magnetometer, BMI323 IMU, and BMP390 barometer. Publishes NMEA 0183 sentences over WiFi (TCP/UDP) and USB serial, and is configured entirely through a web interface.
 
-The BMM350 sensor is based on TMR (tunnel magnetoresistance) technology instead of Hall-effect promises lower noise and higher sensitivity compared to earlier Bosch sensors.
+The BMM350 sensor is based on TMR (tunnel magnetoresistance) technology instead of Hall-effect and promises lower noise and higher sensitivity compared to earlier Bosch sensors. It also includes factory temperature drift compensation coefficients.
 
 The project is based on PlatformIO using the Arduino libraries. The code can be compiled with PlatformIO and uploaded to an ESP32-C3 (probably other ESP32 as well, but I did not try) connected to the sensors via I²C. All configuration can be done using the web interface.
 
@@ -126,7 +126,7 @@ Please review these security considerations before deploying on your boat:
 
 This project is released under the MIT License — see [LICENSE.md](LICENSE.md).
 
-The bundled sensor library `BMM350_BMI3XY_compass_lib_pack` includes third-party components under their respective licenses.
+The bundled sensor library [BMM350_BMI3XY_compass_lib_pack](https://github.com/pozoo/BMM350_BMI3XY_compass_lib_pack) includes third-party components under their respective licenses.
 
 ## Acknowledgments
 
