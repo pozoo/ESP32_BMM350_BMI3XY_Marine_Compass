@@ -36,7 +36,7 @@ The project is based on PlatformIO using the Arduino libraries. The code can be 
 
 I have used a nice [breakout board from RTrobot](https://de.aliexpress.com/item/1005004252794090.html) that includes all sensors.
 
-If you use above board and the ESP32-C3 supermini (search Aliexpress), you can use the PCB in the pcb folder for assembly. Otherwise a simple I2C cabel connection will do as well.
+If you use above board and the ESP32-C3 supermini (search Aliexpress), you can use the PCB in the pcb folder for assembly. Otherwise a simple I²C cabel connection will do as well.
 
 <img src="images/compass.jpeg" alt="Compass Interface" width="50%">
 
