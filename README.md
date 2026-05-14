@@ -32,7 +32,7 @@ The project is based on PlatformIO using the Arduino libraries. The code can be 
 | ESP32-C3 | Other ESP32 variants can be used with a `platformio.ini` board change. |
 | Bosch BMM350 | I²C magnetometer |
 | Bosch BMI323 (or BMI3xx) | I²C 6-axis IMU |
-| Bosch BMP390 | I²C pressure sensor (optional but recommended) |
+| Bosch BMP390 | I²C pressure sensor (optional) |
 
 I have used a nice [breakout board from RTrobot](https://de.aliexpress.com/item/1005004252794090.html) that includes all sensors.
 
