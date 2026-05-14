@@ -86,6 +86,9 @@ void WiFiManager::begin() {
 
     // Always start AP mode
     startAP_internal();
+
+    // Log AP credentials so user can recover the password if forgotten
+    Log.infoln("AP SSID: %s, password: %s", _apSSID.c_str(), _apPassword.c_str());
 }
 
 void WiFiManager::startAP() {
