@@ -38,7 +38,7 @@ I have used a nice [breakout board from RTrobot](https://de.aliexpress.com/item/
 
 If you use above board and the ESP32-C3 supermini (search Aliexpress), you can use the PCB in the pcb folder for assembly. Otherwise a simple I²C cabel connection will do as well.
 
-<img src="images/compass.jpeg" alt="Compass Interface" width="50%">
+<img src="images/compass.jpeg" alt="Compass device">
 
 All three sensors share the I²C bus at 400 kHz. Wire `SDA`/`SCL` to the ESP32-C3 default pins, plus `3V3` and `GND`. 
 
