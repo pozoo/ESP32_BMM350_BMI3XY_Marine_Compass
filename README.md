@@ -106,7 +106,7 @@ The firmware does NOT do any periodic recalibration in the background. This is o
 
 ## Library dependency
 
-The sensor stack lives in a separate library package, `BMM350_BMI3XY_compass_lib_pack` — this bundles the Bosch SensorAPIs, the Fusion AHRS sources, the magneto ellipsoid-fit calibration, and the higher-level wrapper classes.
+The sensor stack lives in a separate library package, [BMM350_BMI3XY_compass_lib_pack](https://github.com/pozoo/BMM350_BMI3XY_compass_lib_pack) — this bundles the Bosch SensorAPIs, the Fusion AHRS sources, the magneto ellipsoid-fit calibration, and the higher-level wrapper classes.
 
 The purpose of this is that `BMM350_BMI3XY_compass_lib_pack` can be easier used in other projects. This code is not ESP32 dependent and can run also on other Arduino boards with e.g. the SAMD21 microcontroller.
 
